@@ -1,35 +1,31 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
-import { UserService } from 'src/app/services/user.service';
-import { USER_LOGIN_URL } from 'src/app/shared/constants/urls';
 import { Cart } from 'src/app/shared/models/Cart';
 import { CartItem } from 'src/app/shared/models/CartItem';
-import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-cart-page',
   templateUrl: './cart-page.component.html',
   styleUrls: ['./cart-page.component.css']
 })
-export class CartPageComponent
-{
-  cart!:Cart;
-  constructor(private cartService: CartService)
-  {
+export class CartPageComponent implements OnInit {
+  cart!: Cart;
+  constructor(private cartService: CartService) {
     this.cartService.getCartObservable().subscribe((cart) => {
       this.cart = cart;
     })
+   }
+
+  ngOnInit(): void {
   }
 
-  removeFromCart(cartItem:CartItem)
-  {
+  removeFromCart(cartItem:CartItem){
     this.cartService.removeFromCart(cartItem.food.id);
   }
 
-  changeQuantity(cartItem: CartItem, quantityInString:string)
-  {
+  changeQuantity(cartItem:CartItem,quantityInString:string){
     const quantity = parseInt(quantityInString);
     this.cartService.changeQuantity(cartItem.food.id, quantity);
   }
+
 }

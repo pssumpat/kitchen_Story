@@ -29,13 +29,12 @@ export class LoadingInterceptor implements HttpInterceptor {
           this.handleHideLoading();
         }
       })
-    )
-
+    );
   }
+
   handleHideLoading(){
-    pendingRequests = pendingRequests -1;
+    pendingRequests = pendingRequests - 1;
     if(pendingRequests === 0)
     this.loadingService.hideLoading();
   }
 }
-
